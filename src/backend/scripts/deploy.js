@@ -5,11 +5,24 @@ async function main() {
   console.log("Deploying contracts with the account:", deployer.address);
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  // deploy contracts here:
+  //sending contracts to deploy
+  const NFT = await ethers.getContractFactory("NFT");
+  //to fetch the copy of deployed contract for frontend
+  const nft = await NFT.deploy();
+
+  //sending contracts to deploy
+  const Nftmarketplace = await ethers.getContractFactory("Nftmarketplace");
+  //to fetch the copy of deployed contract for frontend
+  const nftmarketplace = await Nftmarketplace.deploy(1);
   
   
+  console.log("NFT contract address", nft.address)
+  console.log("marketplace contract address", nftmarketplace.address)
   // For each contract, pass the deployed contract and name to this function to save a copy of the contract ABI and address to the front end.
-  saveFrontendFiles();
+  saveFrontendFiles(nft,"NFT");
+  saveFrontendFiles(nftmarketplace,"Nftmarketplace");
+
+
 }
 
 function saveFrontendFiles(contract, name) {
